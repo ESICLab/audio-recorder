@@ -17,9 +17,12 @@
         const audioPlayback = document.getElementById('audioPlayback');
 
         let mediaRecorder;
-        let audioChunks = [];
+        let audioChunks = []; // This array will be reset for each new recording
 
         startBtn.addEventListener('click', async () => {
+            // Clear previous audio chunks before starting a new recording
+            audioChunks = []; 
+
             const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
             mediaRecorder = new MediaRecorder(stream);
 
@@ -51,7 +54,7 @@
             const formData = new FormData();
             formData.append('audio', audioBlob, 'recording.wav');
 
-            fetch('https://your-n8n-server-endpoint', {
+            fetch('https://jobsanta.app.n8n.cloud/webhook/3eaedb67-74ef-48a3-a40c-771d3e76b9d1', {
                 method: 'POST',
                 body: formData,
             })
